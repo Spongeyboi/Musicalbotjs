@@ -1,0 +1,12 @@
+{
+  "prefix":"!",
+  
+  "playcommand":"play",
+  "stopcommand":"stop",
+  "skipcommand":"skip",
+  "loopcommand":"loop",
+  "queuecommand":"queue",
+  "nowplayingcommand":"nowplaying",
+  "removecommand":"remove",
+  "helpcommand":"help"
+}
