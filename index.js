@@ -1,7 +1,7 @@
 const Discord = require("discord.js"),
 client = new Discord.Client(),
 settings = {
-    prefix:process.env.prefix,
+    prefix:config.prefix,
     token: process.env.TOKEN
 };
 
