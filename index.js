@@ -4,7 +4,8 @@ settings = {
     prefix:process.env.prefix,
     token: process.env.TOKEN
 };
- 
+
+const config = require("./config.json") 
 const { Player } = require("discord-player");
 // Create a new Player (you don't need any API Key)
 const player = new Player(client);
@@ -58,7 +59,6 @@ client.player.on('error', (error, message) => {
 
 client.on("ready", () => {
     console.log("I'm ready !");
-    client.user.setActivity({type:"STREAMING",name:`!help | ${client.guilds.cache.size} guilds`,url:"https://www.twitch.tv/spongebob7989"})
 });
  
 client.on("message", async (message) => {
@@ -72,27 +72,27 @@ client.on("message", async (message) => {
     // !play Despacito
     // will play "Despacito" in the member voice channel
   try{
-    if(command === "play"){
+    if(command === config.playcommand){
       if (!args[0]) return message.channel.send("No video was specified")
-        await client.player.play(message, args.slice().join(" "), message.member.user).catch(error=>{message.channel.send("An error occured. "+error)})
+        await client.player.play(message, args.slice().join(" "), message.member.user)
         // as we registered the event above, no need to send a success message here
     }
-    if(command === "stop"){
+    if(command === config.stopcommand){
       await client.player.stop(message)
     }
-    if(command === "skip"){
+    if(command === config.skipcommand){
       await client.player.skip(message)
     }
-    if(command === "queue"){
+    if(command === config.queuecommand){
       await client.player.getQueue(message)
     }
-    if(command === "nowplaying"){
+    if(command === config.nowplayingcommand){
       await client.player.getQueue(message)
     }
-    if(command === "clearqueue"){
+    if(command === config.clearqueuecommand){
       await client.player.clearQueue(message)
     }
-    if(command === "loop"){
+    if(command === config.loopcommand){
       if (args[0]==="true"){
         try{
           await client.player.setRepeatMode(message, true)
@@ -113,10 +113,10 @@ client.on("message", async (message) => {
         message.channel.send("You must use the command like this `loop <true/false>`")
       }
     }
-    if(command === "remove"){
+    if(command === config.removecommand){
       await client.player.remove(message,args[0])
     }
-    if(command === "help"){
+    if(command === config.helpcommand){
       const embed = new Discord.MessageEmbed()
       .setAuthor(client.user.username,client.user.displayAvatarURL({format:"png"}))
       .setDescription("!help             : This\n"+
@@ -147,4 +147,4 @@ client.on("message", async (message) => {
   }
 });
  
-client.login(settings.token);
+client.login(settings.token).catch(err=>console.log("The bot couldn't start. Most likely your token is invalid or not specified. Make sure a environmenal token called TOKEN exists with your bot token."));
