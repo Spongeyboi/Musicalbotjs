@@ -1,3 +1,4 @@
+const config = require("./config.json") 
 const Discord = require("discord.js"),
 client = new Discord.Client(),
 settings = {
@@ -5,7 +6,6 @@ settings = {
     token: process.env.TOKEN
 };
 
-const config = require("./config.json") 
 const { Player } = require("discord-player");
 // Create a new Player (you don't need any API Key)
 const player = new Player(client);
